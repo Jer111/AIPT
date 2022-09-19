@@ -18,21 +18,56 @@ public class Node{
         this.playerId = playerId;
         this.children = children;
         this.depthToGo = depthToGo;
+        makeTree();
+    }
+
+    public void makeTree(){
+        if (depthToGo == 0){
+            return;
+        }
+        for (int i = 0; i < board.width; i++) {  
+            if (board.isValid(i)) {
+                Board newBoard = new Board(board);
+                newBoard = board.getNewBoard(i, playerId);
+                System.out.println(i+1);
+                System.out.println(heuristic.getBestAction(playerId, newBoard));
+                System.out.println(newBoard.toString());
+                children.add(new Node(newBoard, heuristic, (playerId % 2) + 1, new ArrayList<Node>(), depthToGo - 1));
+            }
+        }
+    }
+
+    public int evaluateTree(int depth, Boolean ISMAX){
+        int minmaxvalue;
+        if (depth == 0){
+            return heuristic.getBestAction(playerId, board);
+        }
+        if (ISMAX){ //Maximizing player
+            minmaxvalue = Integer.MIN_VALUE;
+            for (Node child : getChildren()){
+                minmaxvalue = Math.max(minmaxvalue, child.evaluateTree(depth -1, false));
+            }
+            return minmaxvalue;
+        }
+        else if (!ISMAX){ //Minimizing player
+            minmaxvalue = Integer.MAX_VALUE;
+            for (Node child : getChildren()){
+                minmaxvalue = Math.min(minmaxvalue, child.evaluateTree(depth -1, true));
+            }
+            return minmaxvalue;
+        }else{
+            System.err.println("PlayerId is not 1 or 2");
+            return 0;
+        }
     }
 
     public void setHeuristic(Heuristic heuristic){
         this.heuristic = heuristic;
     }
 
-    public void addChild(Node child){
-        children.add(child);
-    }
-
-    public int getHeuristic(){
-        return heuristic.evaluateBoard(playerId, board);
-    }
-    public int getDepthToGo(){
-        return depthToGo;
+   
+    public ArrayList<Node> getChildren(){
+        return children;
     }
 
 }

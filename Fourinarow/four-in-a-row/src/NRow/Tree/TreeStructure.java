@@ -10,6 +10,7 @@ public class TreeStructure{
     
     public TreeStructure(Board board, Heuristic heuristic, int playerId){
         //TODO DIT MOET IN NODE
+        /* 
         root = new Node(board, heuristic, playerId, new ArrayList<Node>(), 3);
         if (root.getDepthToGo() == 0){
             return;
@@ -22,7 +23,7 @@ public class TreeStructure{
                 System.out.println(newBoard.toString());
                 root.addChild(new Node(newBoard, heuristic, (playerId % 2) + 1, new ArrayList<Node>(), root.getDepthToGo() - 1));
             }
-        }
+        }*/
 
     }
 }

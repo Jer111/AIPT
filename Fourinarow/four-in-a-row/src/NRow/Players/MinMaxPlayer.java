@@ -1,10 +1,10 @@
 package NRow.Players;
 
-import java.util.TreeMap;
+import java.util.ArrayList;
 
 import NRow.Board;
 import NRow.Heuristics.Heuristic;
-import NRow.Tree.TreeStructure;
+import NRow.Tree.Node;
 
 public class MinMaxPlayer extends PlayerController {
     private int depth;
@@ -12,7 +12,8 @@ public class MinMaxPlayer extends PlayerController {
     public MinMaxPlayer(int playerId, int gameN, int depth, Heuristic heuristic) {
         super(playerId, gameN, heuristic);
         this.depth = depth;
-        //You can add functionality which runs when the player is first created (before the game starts)
+        // You can add functionality which runs when the player is first created (before
+        // the game starts)
     }
 
     /**
@@ -25,7 +26,8 @@ public class MinMaxPlayer extends PlayerController {
         // TODO: implement minmax player!
         // HINT: use the functions on the 'board' object to produce a new board given a specific move
         // HINT: use the functions on the 'heuristic' object to produce evaluations for the different board states!
-        TreeStructure tree = new TreeStructure(board, heuristic, playerId);
+        Node root = new Node(board, heuristic, playerId, new ArrayList<Node>(), depth);
+        return root.evaluateTree(depth, true);
         
         /*
         // Example: 
@@ -51,10 +53,10 @@ public class MinMaxPlayer extends PlayerController {
         */
 
         //return maxMove;
-        return 1;
+
+        
+
+        //return 1;
     }
 
-    
 }
-
-
