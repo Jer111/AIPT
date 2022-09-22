@@ -26,8 +26,8 @@ public class MinMaxPlayer extends PlayerController {
         // TODO: implement minmax player!
         // HINT: use the functions on the 'board' object to produce a new board given a specific move
         // HINT: use the functions on the 'heuristic' object to produce evaluations for the different board states!
-        Node root = new Node(board, heuristic, playerId, new ArrayList<Node>(), depth);
-        return root.evaluateTree(depth, true);
+        Node root = new Node(board, heuristic, playerId, new ArrayList<Node>(), depth, -1, gameN);
+        return root.evaluateTree(depth, depth, false);
         
         /*
         // Example: 
