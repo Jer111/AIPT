@@ -14,8 +14,9 @@ public class Node{
     private int depthToGo;
     private int pos;
     private int GameN;
+    private Boolean ALFABETA;
 
-    public Node(Board board, Heuristic heuristic, int playerId, ArrayList<Node> children, int depthToGo, int pos, int GameN){
+    public Node(Board board, Heuristic heuristic, int playerId, ArrayList<Node> children, int depthToGo, int pos, int GameN, Boolean ALFABETA){
         this.board = board;
         this.heuristic = heuristic;
         this.playerId = playerId;
@@ -23,7 +24,11 @@ public class Node{
         this.depthToGo = depthToGo;
         this.pos = pos;
         this.GameN = GameN;
+        this.ALFABETA = ALFABETA;
         makeTree();
+        if (ALFABETA){
+            alphabetaPruning(GameN, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+        }
     }
 
     public void makeTree(){
@@ -34,7 +39,7 @@ public class Node{
             if (board.isValid(i)) {
                 Board newBoard = new Board(board);
                 newBoard = board.getNewBoard(i, playerId);
-                children.add(new Node(newBoard, heuristic, (playerId % 2) + 1, new ArrayList<Node>(), depthToGo - 1, i, GameN));
+                children.add(new Node(newBoard, heuristic, (playerId % 2) + 1, new ArrayList<Node>(), depthToGo - 1, i, GameN, ALFABETA));
             }
         }
     }
@@ -43,9 +48,9 @@ public class Node{
         int minmaxvalue;
         int minmaxpos = -1;
         if (Game.winning(board.getBoardState(), GameN) == 1){
-            System.err.println("Player 1 can win");
-            System.err.println(depth);
-            System.err.println(depth0);
+            //System.err.println("Player 1 can win");
+            //System.err.println(depth);
+            //System.err.println(depth0);
 
             if (depth == depth0){
                 return getPos();
@@ -54,14 +59,14 @@ public class Node{
         }
         else if (Game.winning(board.getBoardState(), GameN) == 2){
             if (depth == depth0){
-                System.err.println("Player 2 can win");
+                //System.err.println("Player 2 can win");
                 return 1;
             }
             return -10000;
         }
         else if (depth == 0){
-            System.err.println("Heuristic is: "+ heuristic.evaluateBoard(playerId, board));
-            System.err.println(board.toString());
+            //System.err.println("Heuristic is: "+ heuristic.evaluateBoard(playerId, board));
+            //System.err.println(board.toString());
             return heuristic.evaluateBoard(playerId, board);
         }
         else if (ISMAX){ //Maximizing player
@@ -119,6 +124,38 @@ public class Node{
 
     public int getPos(){
         return pos;
+    }
+
+    public int alphabetaPruning(int depth, int alpha, int beta, Boolean ISMAX){
+        if (depth == 0){
+            return heuristic.evaluateBoard(playerId, board);
+        }
+        if (ISMAX){
+            int maxEval = Integer.MIN_VALUE;
+            for (Node child : getChildren()){
+                maxEval = Math.max(maxEval, child.alphabetaPruning(depth - 1, alpha, beta, false));
+                if (maxEval >= beta){
+                    break;
+                }
+                alpha = Math.max(alpha, maxEval);
+            }
+            return maxEval;
+
+        }
+        else if (!ISMAX){
+            int minEval = Integer.MAX_VALUE;
+            for (Node child : getChildren()){
+                minEval = Math.min(minEval, child.alphabetaPruning(depth - 1, alpha, beta, true));
+                if (minEval <= alpha){
+                    break;
+                }
+                beta = Math.min(beta, minEval);
+            }
+            return minEval;
+        }else{
+            System.err.println("ISMAX is not true or false");
+            return -1;
+        }
     }
 
 }

@@ -27,7 +27,8 @@ public class App {
         SimpleHeuristic heuristic2 = new SimpleHeuristic(n);
 
         PlayerController human = new HumanPlayer(1, n, heuristic1);
-        PlayerController human2 = new MinMaxPlayer(2, n, 2, heuristic2);
+        //PlayerController human = new MinMaxPlayer(1, n, 4,heuristic1);
+        PlayerController human2 = new MinMaxPlayer(2, n, 7, heuristic2, false);
 
         //TODO: Implement other PlayerControllers (MinMax, AlphaBeta)
 
