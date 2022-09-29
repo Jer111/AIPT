@@ -6,16 +6,16 @@ import NRow.Game;
 
 import java.util.ArrayList;
 
-public class Node{
+public class AlphaBetaNode{
     private Board board;
     private Heuristic heuristic;
     private int playerId;
-    private ArrayList<Node> children;
+    private ArrayList<AlphaBetaNode> children;
     private int depthToGo;
     private int pos;
     private int GameN;
 
-    public Node(Board board, Heuristic heuristic, int playerId, ArrayList<Node> children, int depthToGo, int pos, int GameN){
+    public AlphaBetaNode(Board board, Heuristic heuristic, int playerId, ArrayList<AlphaBetaNode> children, int depthToGo, int pos, int GameN){
         this.board = board;
         this.heuristic = heuristic;
         this.playerId = playerId;
@@ -36,15 +36,13 @@ public class Node{
             if (board.isValid(i)) {
                 Board newBoard = new Board(board);
                 newBoard = board.getNewBoard(i, playerId);
-                children.add(new Node(newBoard, heuristic, (playerId % 2) + 1, new ArrayList<Node>(), depthToGo - 1, i, GameN));
+                children.add(new AlphaBetaNode(newBoard, heuristic, (playerId % 2) + 1, new ArrayList<AlphaBetaNode>(), depthToGo - 1, i, GameN));
             }
         }
     }
 
-    public int evaluateTree(int depth, int depth0, Boolean ISMAX){
-        int minmaxvalue;
+    public int evaluateTree(int depth, int depth0, int alpha, int beta, Boolean ISMAX){
         int minmaxpos = -1;
-
         if (Game.winning(board.getBoardState(), GameN) == 1){
             if (depth == depth0){
                 return getPos();
@@ -55,37 +53,50 @@ public class Node{
             if (depth == depth0){
                 return getPos();
             }
-
             return -10000;
         } else if (depth == 0){
             return heuristic.evaluateBoard(playerId, board);
         } else if (ISMAX){ //Maximizing player
-            minmaxvalue = Integer.MIN_VALUE;
+            int maxEval = Integer.MIN_VALUE;
 
-            for (Node child : getChildren()){
-                int tempval = child.evaluateTree(depth - 1, depth0, false);
-                if(tempval > minmaxvalue){
-                    minmaxvalue = tempval;
+            for (AlphaBetaNode child : getChildren()){
+                int tempval = child.evaluateTree(depth - 1, depth0, alpha, beta, false);
+
+                if(tempval > maxEval){
+                    maxEval = tempval;
                     minmaxpos = child.getPos();
-                }    
+                }   
+
+                if (maxEval >= beta){
+                    break;
+                }
+
+                alpha = Math.max(alpha, maxEval);
             }
 
             if (depth != depth0){
-                return minmaxvalue;
+                return maxEval;
             }
         } else if (!ISMAX){ //Minimizing player
-            minmaxvalue = Integer.MAX_VALUE;
+            int minEval = Integer.MAX_VALUE;
 
-            for (Node child : getChildren()){
-                int tempval = child.evaluateTree(depth - 1, depth0, true);
-                if(tempval < minmaxvalue){
-                    minmaxvalue = tempval;
+            for (AlphaBetaNode child : getChildren()){
+                int tempval = child.evaluateTree(depth - 1, depth0, alpha, beta, true);
+
+                if(tempval < minEval){
+                    minEval = tempval;
                     minmaxpos = child.getPos();
                 }
+
+                if (minEval <= alpha){
+                    break;
+                }
+
+                beta = Math.min(beta, minEval);
             }
 
             if (depth != depth0){
-                return minmaxvalue;
+                return minEval;
             }
         } else if (playerId != 1 && playerId != 2){
             System.err.println("PlayerId is not 1 or 2");
@@ -93,7 +104,6 @@ public class Node{
         }
 
         if (minmaxpos == -1){
-            System.err.println("Minmaxpos is -1");
             return -1;
         }
 
@@ -103,8 +113,8 @@ public class Node{
     public void setHeuristic(Heuristic heuristic){
         this.heuristic = heuristic;
     }
-   
-    public ArrayList<Node> getChildren(){
+
+    public ArrayList<AlphaBetaNode> getChildren(){
         return children;
     }
 
