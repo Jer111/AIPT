@@ -60,6 +60,10 @@ public class Node {
         int minmaxvalue;
         int minmaxpos = -1;
 
+        // If the move ends in a draw
+        if (Game.winning(board.getBoardState(), GameN) == -1){
+            return 0;
+        }
         // If the move is a winning move for player 1
         if (Game.winning(board.getBoardState(), GameN) == 1) {
             // If the move is at the same depth as the original move

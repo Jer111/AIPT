@@ -10,7 +10,7 @@ public class Testcase {
 
         // Cases with width 5, height 5, gameN 3, depth1 3 and depth2 3
         // 1. MinMaxPlayer vs MinMaxPlayer
-        System.out.println("Case 1: MinMaxPlayer X vs MinMaxPlayer O, width 5, height 5, gameN 3, depth1 3 and depth2 3");
+        /*System.out.println("Case 1: MinMaxPlayer X vs MinMaxPlayer O, width 5, height 5, gameN 3, depth1 3 and depth2 3");
         testOnlyMinimax(5, 5, 3, 3, 3);
         // 2. AlphaBetaPlayer vs AlphaBetaPlayer
         System.out.println("Case 2: AlphaBetaPlayer X vs AlphaBetaPlayer O, width 5, height 5, gameN 3, depth1 3 and depth2 3");
@@ -33,13 +33,20 @@ public class Testcase {
         // Cases with width 12, height 20, gameN 5, depth1 5 and depth2 3
         // 7. MinMaxPlayer vs MinMaxPlayer
         System.out.println("Case 7: MinMaxPlayer X vs MinMaxPlayer O, width 12, height 19, gameN 4, depth1 3 and depth2 4");
-        testOnlyMinimax(12, 19, 4, 3, 4);
+        testOnlyMinimax(12, 20, 4, 3, 4);
         // 8. AlphaBetaPlayer vs AlphaBetaPlayer
         System.out.println("Case 8: AlphaBetaPlayer X vs AlphaBetaPlayer O, width 12, height 19, gameN 4, depth1 3 and depth2 4");
-        testOnlyAlphabeta(12, 19, 4, 3, 4);
+        testOnlyAlphabeta(12, 20, 4, 3, 4);
         // 9. AlphaBetaPlayer vs MiniMaxPlayer
         System.out.println("Case 9: AlphaBetaPlayer X vs MiniMaxPlayer O, width 12, height 19, gameN 4, depth1 3 and depth2 4");
-        testBoth(12, 19, 4, 3, 4);
+        testBoth(12, 20, 4, 3, 4);
+        System.out.println("------------------------------------------------------------------------------------------------------");*/
+        System.out.println("Case 10: MinMaxPlayer X vs MinMaxPlayer O, width 12, height 19, gameN 5, depth1 1 and depth2 1");
+        testOnlyMinimax(12, 20, 5, 1, 1);
+        System.out.println("Case 11: AlphaBetaPlayer X vs AlphaBetaPlayer O, width 12, height 19, gameN 5, depth1 1 and depth2 1");
+        testOnlyAlphabeta(12, 20, 5, 1, 1);
+        System.out.println("Case 12: AlphaBetaPlayer X vs MiniMaxPlayer O, width 12, height 19, gameN 5, depth1 1 and depth2 1");
+        testBoth(12, 20, 5, 1, 1);
         System.out.println("------------------------------------------------------------------------------------------------------");
     }
 

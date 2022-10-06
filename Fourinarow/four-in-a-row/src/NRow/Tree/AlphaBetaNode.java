@@ -55,6 +55,10 @@ public class AlphaBetaNode{
     public int evaluateTree(int depth, int depth0, int alpha, int beta, Boolean ISMAX){
         int minmaxpos = -1;
 
+        // If move ends in draw
+        if (Game.winning(board.getBoardState(), GameN) == -1){
+            return 0;
+        }
         // If the move is a winning move for player 1
         if (Game.winning(board.getBoardState(), GameN) == 1){
             // If the current depth is the same as the original depth, return the position

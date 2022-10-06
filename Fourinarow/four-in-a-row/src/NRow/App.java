@@ -9,15 +9,15 @@ import NRow.Testcase;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        int gameN = 4;
+        /*int gameN = 4;
         int boardWidth = 7;
         int boardHeight = 6;
 
         PlayerController[] players = getPlayers(gameN);
 
         Game game = new Game(gameN, boardWidth, boardHeight, players);
-        game.startGame();
-        //Testcase test = new Testcase();
+        game.startGame();*/
+        Testcase test = new Testcase();
     }
 
     /**
