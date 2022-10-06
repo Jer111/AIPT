@@ -16,7 +16,7 @@ public class AlphaBetaPlayer extends PlayerController{
     }
 
      /**
-     * Implement this method yourself!
+     * makeMove is called every time it is this player's turn to make a move.
      * @param board the current board
      * @return column integer the player chose
      */

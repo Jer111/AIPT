@@ -5,6 +5,7 @@ import NRow.Players.AlphaBetaPlayer;
 import NRow.Players.HumanPlayer;
 import NRow.Players.MinMaxPlayer;
 import NRow.Players.PlayerController;
+import NRow.Testcase;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -16,6 +17,7 @@ public class App {
 
         Game game = new Game(gameN, boardWidth, boardHeight, players);
         game.startGame();
+        //Testcase test = new Testcase();
     }
 
     /**
@@ -28,15 +30,15 @@ public class App {
         SimpleHeuristic heuristic2 = new SimpleHeuristic(n);
 
         //HUMAN PLAYERS
-        //PlayerController human = new HumanPlayer(1, n, heuristic1);
+        PlayerController human = new HumanPlayer(1, n, heuristic1);
         //PlayerController human2 = new HumanPlayer(2, n, heuristic2);
 
         //MINMAX PLAYERS
         //PlayerController human = new MinMaxPlayer(1, n, 7,heuristic1);
-        PlayerController human2 = new MinMaxPlayer(2, n, 7, heuristic2);
+        //PlayerController human2 = new MinMaxPlayer(2, n, 4, heuristic2);
 
         //ALPHABETA PLAYERS
-        PlayerController human = new AlphaBetaPlayer(1, n, 7, heuristic1);
+        PlayerController human2 = new AlphaBetaPlayer(2, n, 3, heuristic2);
         //PlayerController human2 = new AlphaBetaPlayer(2, n, 7, heuristic2);
 
         PlayerController[] players = { human, human2 };

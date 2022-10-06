@@ -15,7 +15,7 @@ public class Game {
    * @param boardHeight Height of the board
    * @param players List of players
    */
-  Game(int gameN, int boardWidth, int boardHeight, PlayerController[] players) {
+  public Game(int gameN, int boardWidth, int boardHeight, PlayerController[] players) {
     assert (boardWidth % 2 != 0) : "Board width must be odd!";
     this.gameN = gameN;
     this.players = players;
@@ -27,7 +27,7 @@ public class Game {
    * @return the playerId of the winner
    */
   public int startGame() {
-    System.out.println("Start game!");
+    //System.out.println("Start game!");
     int currentPlayer = 0;
 
     while (!this.isOver()) {
@@ -39,7 +39,7 @@ public class Game {
     }
 
 
-    System.out.println(gameBoard);
+    //System.out.println(gameBoard);
     if(winner < 0) {
       System.out.println("Game is a draw!");
     } else {
@@ -106,7 +106,7 @@ public class Game {
     
     // Ascending Diagonal Check
     for (int i = 0; i < (board.length - (gameN - 1)); i++) {
-      for (int j = board[i].length - 1; j > gameN; j--) { 
+      for (int j = board[i].length-1; j >= gameN-1; j--) {
         if (board[i][j] != 0) {
           player = board[i][j];
           for (int x = 1; x < gameN; x++) {
